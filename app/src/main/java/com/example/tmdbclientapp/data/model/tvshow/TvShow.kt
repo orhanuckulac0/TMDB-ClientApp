@@ -1,4 +1,4 @@
-package com.example.tmdbclientapp.model.tvshow
+package com.example.tmdbclientapp.data.model.tvshow
 
 
 import androidx.room.Entity

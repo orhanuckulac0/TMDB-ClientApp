@@ -1,7 +1,7 @@
 package com.example.tmdbclientapp.domain.usecase
 
 import com.example.tmdbclientapp.domain.repository.MovieRepository
-import com.example.tmdbclientapp.model.movie.Movie
+import com.example.tmdbclientapp.data.model.movie.Movie
 
 
 // use class cannot do it without getting support from a repository

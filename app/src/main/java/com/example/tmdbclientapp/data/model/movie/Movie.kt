@@ -1,4 +1,4 @@
-package com.example.tmdbclientapp.model.movie
+package com.example.tmdbclientapp.data.model.movie
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName

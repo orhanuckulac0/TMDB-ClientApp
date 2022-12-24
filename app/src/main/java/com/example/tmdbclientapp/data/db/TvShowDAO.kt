@@ -1,9 +1,9 @@
-package com.example.tmdbclientapp.database
+package com.example.tmdbclientapp.data.db
 
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.tmdbclientapp.model.tvshow.TvShow
+import com.example.tmdbclientapp.data.model.tvshow.TvShow
 
 interface TvShowDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

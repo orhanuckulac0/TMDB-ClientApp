@@ -1,9 +1,9 @@
-package com.example.tmdbclientapp.database
+package com.example.tmdbclientapp.data.db
 
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.tmdbclientapp.model.artist.Artist
+import com.example.tmdbclientapp.data.model.artist.Artist
 
 interface ArtistDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

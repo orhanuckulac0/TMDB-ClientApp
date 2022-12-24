@@ -1,6 +1,6 @@
 package com.example.tmdbclientapp.domain.repository
 
-import com.example.tmdbclientapp.model.artist.Artist
+import com.example.tmdbclientapp.data.model.artist.Artist
 
 interface ArtistRepository {
     suspend fun getArtists(): List<Artist>?
