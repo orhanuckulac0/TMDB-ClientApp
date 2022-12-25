@@ -9,8 +9,6 @@ import com.google.gson.annotations.SerializedName
 data class TvShow(
 
     @PrimaryKey
-    @SerializedName("first_air_date")
-    val firstAirDate: String?,
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
