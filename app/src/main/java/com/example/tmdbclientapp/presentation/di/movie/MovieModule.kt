@@ -5,11 +5,15 @@ import com.example.tmdbclientapp.domain.use_case.UpdateMoviesUseCase
 import com.example.tmdbclientapp.presentation.movie.MovieViewModelFactory
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.scopes.ActivityScoped
 
 @Module
+@InstallIn(ActivityComponent::class)
 class MovieModule {
 
-    @MovieScope
+    @ActivityScoped
     @Provides
     fun provideMovieViewModelFactory(
         getMoviesUseCase: GetMoviesUseCase,

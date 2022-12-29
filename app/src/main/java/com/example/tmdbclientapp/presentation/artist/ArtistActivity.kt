@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.tmdbclientapp.R
 import com.example.tmdbclientapp.databinding.ActivityArtistBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ArtistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArtistBinding
 
