@@ -55,4 +55,24 @@ class MovieDAOTest {
         // compare with original list
         Truth.assertThat(movies).isEqualTo(retrievedMovies)
     }
+
+    @Test
+    fun deleteMoviesTest() = runBlocking {
+        // create  a list of movie obj
+        val movies = listOf(
+            Movie(1, "test1", "test1Path", "testDate1", "title1"),
+            Movie(2, "test2", "test2Path", "testDate2", "title2"),
+            Movie(3, "test3", "test3Path", "testDate3", "title3")
+        )
+
+        // save the movies to db
+        dao.saveMovies(movies)
+
+        // delete all movies in the db
+        dao.deleteAllMovies()
+
+        // try to get the movies from db and check if db is empty
+        val retrievedMovies = dao.getMovies()
+        Truth.assertThat(retrievedMovies).isEmpty()
+    }
 }
