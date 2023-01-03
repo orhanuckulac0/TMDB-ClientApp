@@ -16,25 +16,24 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieActivity : AppCompatActivity() {
-    @Inject
-    lateinit var factory: MovieViewModelFactory
+    @Inject lateinit var movieViewModelFactory: MovieViewModelFactory
     private lateinit var movieViewModel : MovieViewModel
     private lateinit var binding: ActivityMovieBinding
-    private lateinit var adapter: MovieAdapter
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie)
 
-        movieViewModel = ViewModelProvider(this, factory).get(MovieViewModel::class.java)
+        movieViewModel = ViewModelProvider(this, movieViewModelFactory).get(MovieViewModel::class.java)
 
         initRecyclerView()
     }
 
     private fun initRecyclerView(){
         binding.movieRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = MovieAdapter()
-        binding.movieRecyclerView.adapter = adapter
+        movieAdapter = MovieAdapter()
+        binding.movieRecyclerView.adapter = movieAdapter
         displayPopularMovies()
     }
 
@@ -42,16 +41,16 @@ class MovieActivity : AppCompatActivity() {
         binding.movieProgressBar.visibility = View.VISIBLE
 
         val responseLiveData = movieViewModel.getMovies()
+
         responseLiveData.observe(this){
             if (it!= null){
-                adapter.setList(it)
-                adapter.notifyDataSetChanged()
+                movieAdapter.differ.submitList(it)
                 binding.movieProgressBar.visibility = View.GONE
             }else{
-                binding.movieProgressBar.visibility = View.GONE
                 Toast.makeText(applicationContext, "No Data Available", Toast.LENGTH_LONG).show()
             }
         }
+        binding.movieProgressBar.visibility = View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -63,6 +62,7 @@ class MovieActivity : AppCompatActivity() {
         return when(item.itemId){
             R.id.actionUpdate -> {
                 updateMovies()
+                binding.movieRecyclerView.layoutManager?.scrollToPosition(0)
                 true
             }
             else -> {
@@ -74,17 +74,15 @@ class MovieActivity : AppCompatActivity() {
     private fun updateMovies(){
         binding.movieProgressBar.visibility = View.VISIBLE
 
-        val response = movieViewModel.updateMovies()
-        response.observe(this){
+        val responseLiveData = movieViewModel.updateMovies()
+
+        responseLiveData.observe(this){
             if (it != null){
-                adapter.setList(it)
-                adapter.notifyDataSetChanged()
-                binding.movieProgressBar.visibility = View.GONE
+                movieAdapter.differ.submitList(it)
             }else{
                 binding.movieProgressBar.visibility = View.GONE
             }
         }
-
-
+        binding.movieProgressBar.visibility = View.GONE
     }
 }

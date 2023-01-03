@@ -1,4 +1,4 @@
-package com.example.tmdbclientapp.presentation.movie
+package com.example.tmdbclientapp.presentation.artist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,17 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tmdbclientapp.R
 import com.example.tmdbclientapp.data.model.artist.Artist
-import com.example.tmdbclientapp.data.model.movie.Movie
 import com.example.tmdbclientapp.databinding.ListItemBinding
 
-class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
+class ArtistAdapter: RecyclerView.Adapter<ArtistAdapter.MyViewHolder>(){
 
-    private val callback = object : DiffUtil.ItemCallback<Movie>(){
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+    private val callback = object : DiffUtil.ItemCallback<Artist>(){
+        override fun areItemsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        override fun areContentsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem == newItem
         }
     }
@@ -28,31 +27,30 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
 
     class MyViewHolder(private val binding: ListItemBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(movie: Movie){
-            binding.titleTextView.text = movie.title
-            binding.descriptionTextView.text = movie.overview
-            val posterURL = "https://image.tmdb.org/t/p/w500"+movie.posterPath
+        fun bind(artist: Artist){
+            binding.titleTextView.text = artist.name
+            binding.descriptionTextView.text = "Popularity:"+" "+artist.popularity.toString()
+            val posterURL = "https://image.tmdb.org/t/p/w500"+artist.profilePath
             Glide.with(binding.imageView.context)
                 .load(posterURL)
                 .into(binding.imageView)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ListItemBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.list_item,
-            parent,
-            false
+        return MyViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.list_item,
+                parent,
+                false
+            )
         )
-        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val movie = differ.currentList[position]
-        holder.bind(movie)
+        val artist = differ.currentList[position]
+        holder.bind(artist)
     }
 
     override fun getItemCount(): Int {
